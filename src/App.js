@@ -1,19 +1,18 @@
 export default function App() {
     return (
-        <Toolbar
-            onPlayMovie={() => alert('Playing!')}
-            onUploadImage={() => alert('Uploading!')}
-        />
+        <Toolbar />
     );
 }
 
-function Toolbar({ onPlayMovie, onUploadImage }) {
+function Toolbar() {
     return (
-        <div>
-            <Button onClick={onPlayMovie}>
+        <div className="Toolbar" onClick={() => {
+            alert('You clicked on the toolbar')
+        }}>
+            <Button onClick={() => alert('Playing!')}>
                 Play Movie
             </Button>
-            <Button onClick={onUploadImage}>
+            <Button onClick={() => alert('Uploading!')}>
                 Upload Image
             </Button>
         </div>
@@ -22,7 +21,10 @@ function Toolbar({ onPlayMovie, onUploadImage }) {
 
 function Button({ onClick, children }) {
     return (
-        <button onClick={onClick}>
+        <button onClick={e => {
+            e.stopPropagation();
+            onClick();
+        }}>
             {children}
         </button>
     );
