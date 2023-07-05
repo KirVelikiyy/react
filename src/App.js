@@ -1,44 +1,25 @@
-import { useState } from 'react';
+import Heading from './Heading.js';
+import Section from './Section.js';
 
-export default function EditProfile() {
-    const [firstName, setFirstName] = useState('Jane');
-    const [lastName, setLastName] = useState('Jacob');
-    const [isEdit, setIsEdit] = useState(false);
-
-    function handleSubmitClick(e) {
-        e.preventDefault();
-        setIsEdit(!isEdit);
-    }
-
+export default function Page() {
     return (
-        <form>
-            <label>
-                First name:{' '}
-                {isEdit ?
-                    <input
-                    value={firstName}
-                    onChange={e => setFirstName(e.target.value)}
-                    /> :
-                    <b>{firstName}</b>
-                }
-            </label>
-            <label>
-                Last name:{' '}
-                {isEdit ?
-                    <input
-                        value={lastName}
-                        onChange={e => setLastName(e.target.value)}
-                    /> :
-                    <b>{lastName}</b>
-                }
-            </label>
-            <button type="submit" onClick={handleSubmitClick}>
-                {isEdit ?
-                    "Save Profile" :
-                    "Edit Profile"
-                }
-            </button>
-            <p><i>Hello, {firstName} {lastName}!</i></p>
-        </form>
+        <Section>
+            <Heading>Title</Heading>
+            <Section>
+                <Heading>Heading</Heading>
+                <Heading>Heading</Heading>
+                <Heading>Heading</Heading>
+                <Section>
+                    <Heading>Sub-heading</Heading>
+                    <Heading>Sub-heading</Heading>
+                    <Heading>Sub-heading</Heading>
+                    <Section>
+                        <Heading>Sub-sub-heading</Heading>
+                        <Heading>Sub-sub-heading</Heading>
+                        <Heading>Sub-sub-heading</Heading>
+                    </Section>
+                </Section>
+            </Section>
+        </Section>
     );
 }
