@@ -1,25 +1,15 @@
-import Heading from './Heading.js';
-import Section from './Section.js';
+import AddTask from './AddTask.js';
+import TaskList from './TaskList.js';
+import TasksProvider from "./TasksContext";
 
-export default function Page() {
+export default function TaskApp() {
+
     return (
-        <Section>
-            <Heading>Title</Heading>
-            <Section>
-                <Heading>Heading</Heading>
-                <Heading>Heading</Heading>
-                <Heading>Heading</Heading>
-                <Section>
-                    <Heading>Sub-heading</Heading>
-                    <Heading>Sub-heading</Heading>
-                    <Heading>Sub-heading</Heading>
-                    <Section>
-                        <Heading>Sub-sub-heading</Heading>
-                        <Heading>Sub-sub-heading</Heading>
-                        <Heading>Sub-sub-heading</Heading>
-                    </Section>
-                </Section>
-            </Section>
-        </Section>
+        <TasksProvider>
+            <h1>Day off in Kyoto</h1>
+            <AddTask />
+            <TaskList />
+        </TasksProvider>
     );
 }
+
