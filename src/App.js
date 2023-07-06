@@ -1,36 +1,27 @@
-import { useState, useRef } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
 
-export default function Counter() {
-    const [startTime, setStartTime] = useState(null);
-    const [now, setNow] = useState(null);
-    const intervalRef = useRef(null)
+const MyInput = forwardRef((props, ref) => {
+    const realInputRef = useRef(null);
+    useImperativeHandle(ref, () => ({
+        focus() {
+            realInputRef.current.focus();
+        },
+    }));
+    return <input {...props} ref={realInputRef} />;
+});
 
-    function handleStart() {
-        setStartTime(Date.now());
-        setNow(Date.now());
-        setInterval(intervalRef.current);
-        intervalRef.current = setInterval(() => {
-            setNow(Date.now());
-        }, 100);
-    }
+export default function Form() {
+    const inputRef = useRef(null);
 
-    function handleStop() {
-        clearInterval(intervalRef.current);
-    }
-
-    let secondsPassed = 0;
-    if (startTime != null && now != null) {
-        secondsPassed = (now - startTime) / 1000;
+    function handleClick() {
+        inputRef.current.focus();
     }
 
     return (
         <>
-            <h1>Time passed: {secondsPassed.toFixed(3)}</h1>
-            <button onClick={handleStart} >
-                Start
-            </button>
-            <button onClick={handleStop} >
-                Stop
+            <MyInput ref={inputRef} />
+            <button onClick={handleClick}>
+                Focus the input
             </button>
         </>
     );
