@@ -1,30 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useOnlineStatus } from './useOnlineStatus';
 
-export default function SaveButton() {
-    const [isOnline, setIsOnline] = useState(true);
+function StatusBar() {
+    const isOnline = useOnlineStatus();
+    return <h1>{isOnline ? '✅ Online' : '❌ Disconnected'}</h1>;
+}
 
-    useEffect(() => {
-        function handleOnline() {
-            setIsOnline(true);
-        }
-        function handleOffline() {
-            setIsOnline(false);
-        }
-        window.addEventListener('online', handleOnline);
-        window.addEventListener('offline', handleOffline);
-        return () => {
-            window.removeEventListener('online', handleOnline);
-            window.removeEventListener('offline', handleOffline);
-        }
-    }, []);
+function SaveButton() {
+    const isOnline = useOnlineStatus();
 
     function handleSaveClick() {
-        alert('Progress saved');
+        console.log('✅ Progress saved');
     }
 
     return (
-        <button disabled={!isOnline} onClick={handleSaveClick} >
+        <button disabled={!isOnline} onClick={handleSaveClick}>
             {isOnline ? 'Save progress' : 'Reconnecting...'}
         </button>
+    );
+}
+
+export default function App() {
+    return (
+        <>
+            <SaveButton />
+            <StatusBar />
+        </>
     );
 }
