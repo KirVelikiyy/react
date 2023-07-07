@@ -1,30 +1,30 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-function VideoPlayer({ src, isPlaying }) {
-    const ref = useRef(null);
+export default function SaveButton() {
+    const [isOnline, setIsOnline] = useState(true);
 
     useEffect(() => {
-        if (isPlaying) {
-            ref.current.play();
-        } else {
-            ref.current.pause();
+        function handleOnline() {
+            setIsOnline(true);
         }
-    });
+        function handleOffline() {
+            setIsOnline(false);
+        }
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        }
+    }, []);
 
-    return <video ref={ref} src={src} loop playsInline />;
-}
+    function handleSaveClick() {
+        alert('Progress saved');
+    }
 
-export default function App() {
-    const [isPlaying, setIsPlaying] = useState(false);
     return (
-        <>
-            <button onClick={() => setIsPlaying(!isPlaying)}>
-                {isPlaying ? 'Pause' : 'Play'}
-            </button>
-            <VideoPlayer
-                isPlaying={isPlaying}
-                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
-            />
-        </>
+        <button disabled={!isOnline} onClick={handleSaveClick} >
+            {isOnline ? 'Save progress' : 'Reconnecting...'}
+        </button>
     );
 }
